@@ -1,0 +1,230 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* KULTU TV — premium media design system */
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-ember: var(--ember);
+  --color-ember-foreground: var(--ember-foreground);
+  --color-sun: var(--sun);
+  --color-live: var(--live);
+  --font-display: "Bebas Neue", "Archivo Black", sans-serif;
+  --font-sans: "Barlow", system-ui, sans-serif;
+}
+
+:root {
+  --radius: 0.75rem;
+  --background: oklch(0.98 0.004 80);
+  --foreground: oklch(0.16 0.01 40);
+  --surface: oklch(1 0 0);
+  --surface-2: oklch(0.955 0.008 70);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.16 0.01 40);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.16 0.01 40);
+  --primary: oklch(0.58 0.22 30);
+  --primary-foreground: oklch(0.99 0.005 80);
+  --secondary: oklch(0.94 0.01 70);
+  --secondary-foreground: oklch(0.2 0.01 40);
+  --muted: oklch(0.94 0.01 70);
+  --muted-foreground: oklch(0.48 0.02 60);
+  --accent: oklch(0.72 0.18 55);
+  --accent-foreground: oklch(0.15 0.01 40);
+  --destructive: oklch(0.577 0.245 27.325);
+  --destructive-foreground: oklch(0.99 0.005 80);
+  --border: oklch(0.89 0.01 70);
+  --input: oklch(0.89 0.01 70);
+  --ring: oklch(0.58 0.22 30);
+  --ember: oklch(0.62 0.23 32);
+  --ember-foreground: oklch(0.99 0.005 80);
+  --sun: oklch(0.78 0.16 65);
+  --live: oklch(0.6 0.24 25);
+  --gradient-ember: linear-gradient(120deg, oklch(0.62 0.23 32), oklch(0.62 0.24 350));
+  --gradient-veil: linear-gradient(
+    180deg,
+    color-mix(in oklab, var(--background) 0%, transparent),
+    color-mix(in oklab, var(--background) 45%, transparent) 72%,
+    color-mix(in oklab, var(--background) 60%, transparent)
+  );
+  --glass: color-mix(in oklab, var(--surface) 72%, transparent);
+  --shadow-soft: 0 18px 50px -22px color-mix(in oklab, oklch(0.2 0.05 40) 55%, transparent);
+  --shadow-glow: 0 20px 60px -20px color-mix(in oklab, var(--ember) 55%, transparent);
+}
+
+.dark {
+  --background: oklch(0.145 0.004 60);
+  --foreground: oklch(0.965 0.004 80);
+  --surface: oklch(0.19 0.006 60);
+  --surface-2: oklch(0.235 0.008 55);
+  --card: oklch(0.19 0.006 60);
+  --card-foreground: oklch(0.965 0.004 80);
+  --popover: oklch(0.19 0.006 60);
+  --popover-foreground: oklch(0.965 0.004 80);
+  --primary: oklch(0.66 0.22 33);
+  --primary-foreground: oklch(0.99 0.005 80);
+  --secondary: oklch(0.26 0.01 55);
+  --secondary-foreground: oklch(0.965 0.004 80);
+  --muted: oklch(0.26 0.01 55);
+  --muted-foreground: oklch(0.72 0.015 70);
+  --accent: oklch(0.78 0.16 65);
+  --accent-foreground: oklch(0.16 0.01 40);
+  --destructive: oklch(0.7 0.19 22);
+  --destructive-foreground: oklch(0.99 0.005 80);
+  --border: oklch(1 0 0 / 12%);
+  --input: oklch(1 0 0 / 16%);
+  --ring: oklch(0.66 0.22 33);
+  --ember: oklch(0.66 0.22 33);
+  --sun: oklch(0.8 0.16 68);
+  --live: oklch(0.66 0.23 26);
+  --glass: color-mix(in oklab, oklch(0.145 0.004 60) 62%, transparent);
+  --shadow-soft: 0 24px 60px -28px oklch(0 0 0 / 80%);
+  --gradient-veil: linear-gradient(
+    180deg,
+    color-mix(in oklab, var(--background) 0%, transparent),
+    color-mix(in oklab, var(--background) 92%, transparent) 72%,
+    var(--background)
+  );
+}
+
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+
+  html {
+    scroll-behavior: smooth;
+    overflow-x: hidden;
+  }
+
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    transition:
+      background-color 0.4s ease,
+      color 0.4s ease;
+  }
+
+  h1,
+  h2,
+  h3,
+  .display {
+    font-family: var(--font-display);
+    letter-spacing: calc(0.01em + 1px);
+  }
+}
+
+@utility glass-panel {
+  background: var(--glass);
+  backdrop-filter: blur(18px) saturate(140%);
+  border: 1px solid color-mix(in oklab, var(--foreground) 10%, transparent);
+}
+
+@utility gradient-ember {
+  background-image: var(--gradient-ember);
+}
+
+@utility text-gradient-ember {
+  background-image: var(--gradient-ember);
+  background-clip: text;
+  color: transparent;
+}
+
+@utility shadow-soft {
+  box-shadow: var(--shadow-soft);
+}
+
+@utility shadow-glow {
+  box-shadow: var(--shadow-glow);
+}
+
+@utility card-hover {
+  transition:
+    transform 0.35s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.35s ease;
+  &:hover {
+    transform: translateY(-6px) scale(1.03);
+    box-shadow: var(--shadow-glow);
+  }
+}
+
+@utility no-scrollbar {
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@keyframes ticker {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@utility animate-ticker {
+  animation: ticker 32s linear infinite;
+}
+
+@keyframes pulse-live {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.45;
+    transform: scale(0.8);
+  }
+}
+
+@utility animate-live {
+  animation: pulse-live 1.4s ease-in-out infinite;
+}
+
+@keyframes eq-bar {
+  0%,
+  100% {
+    transform: scaleY(0.3);
+  }
+  50% {
+    transform: scaleY(1);
+  }
+}
+
+@utility animate-eq {
+  animation: eq-bar 0.9s ease-in-out infinite;
+  transform-origin: bottom;
+}

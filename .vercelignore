@@ -1,0 +1,2 @@
+# Legacy local videos are replaced by YouTube embeds and must not be uploaded.
+public/contenue/*.mp4
