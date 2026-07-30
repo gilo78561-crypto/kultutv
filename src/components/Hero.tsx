@@ -2,16 +2,22 @@ import { Link } from "@tanstack/react-router";
 import { AnimatePresence, motion } from "motion/react";
 import { ArrowRight, ChevronLeft, ChevronRight, Headphones, Play } from "lucide-react";
 import { useEffect, useState } from "react";
+import heroCotonou from "@/assets/hero/Benin-Cotonou-Place_de_amazone-Pietra_Giallo-40x80x3.jpg";
+import heroVodun from "@/assets/hero/Grand-Vodun-Ceremonies-Rituals.jpg";
+import heroCotonouView from "@/assets/hero/55037969967_30e5450c6c_o.jpg";
+import heroStudio from "@/assets/hero/Screenshot_20260729-115138.jpg";
+import heroPortrait from "@/assets/hero/Screenshot_20260729-123358.jpg";
+import heroBenin from "@/assets/hero/Un_voyage_au_Benin___mes_incontournables.jpg";
 import { useRadio } from "@/hooks/use-radio";
 import { radioStreams, tvStreams, podcasts, articles } from "@/services/mock-data";
 
 const heroBackgrounds = [
-  "/arrière/Grand-Vodun-Ceremonies-Rituals.jpg",
-  "/arrière/Benin-Cotonou-Place_de_amazone-Pietra_Giallo-40x80x3.jpg",
-  "/arrière/55037969967_30e5450c6c_o.jpg",
-  "/arrière/Screenshot_20260729-115138.jpg",
-  "/arrière/Screenshot_20260729-123358.jpg",
-  "/arrière/Un_voyage_au_Benin___mes_incontournables.jpg",
+  heroVodun,
+  heroCotonou,
+  heroCotonouView,
+  heroStudio,
+  heroPortrait,
+  heroBenin,
 ];
 
 const previewCards = [
