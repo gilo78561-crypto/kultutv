@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { Mail, MapPin, Phone } from "lucide-react";
+import { Mail, MapPin, Phone, UserRound } from "lucide-react";
 import { Reveal } from "@/components/Reveal";
 import { ContactForm } from "@/components/ContactForm";
 
@@ -32,13 +32,16 @@ function ContactPage() {
       </div>
       <aside className="glass-panel h-fit space-y-4 rounded-2xl p-6 text-sm">
         <p className="flex items-center gap-3">
-          <Mail className="h-4 w-4 text-primary" /> redaction@kultu.tv
+          <UserRound className="h-4 w-4 text-primary" /> Abdel HAKIM A. LALEYE
         </p>
         <p className="flex items-center gap-3">
-          <Phone className="h-4 w-4 text-primary" /> +33 1 23 45 67 89
+          <Mail className="h-4 w-4 text-primary" /> lahakimfn1@gmail.com
         </p>
         <p className="flex items-center gap-3">
-          <MapPin className="h-4 w-4 text-primary" /> Studios KULTU, Paris
+          <Phone className="h-4 w-4 text-primary" /> +229 0196386907
+        </p>
+        <p className="flex items-center gap-3">
+          <MapPin className="h-4 w-4 text-primary" /> 01 BP : 5521 Cotonou, Benin
         </p>
       </aside>
     </div>
