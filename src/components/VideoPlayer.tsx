@@ -2,6 +2,8 @@ import Hls from "hls.js";
 import { Loader2, Maximize, Pause, Play, Volume2, VolumeX } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
+import { Slider } from "@/components/ui/slider";
+
 type VideoPlayerProps = {
   src: string;
   poster?: string;
@@ -44,6 +46,7 @@ export function VideoPlayer({
   const containerRef = useRef<HTMLDivElement>(null);
   const [isPlaying, setIsPlaying] = useState(false);
   const [muted, setMuted] = useState(true);
+  const [volume, setVolume] = useState(1);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
   const youTubeEmbedUrl = getYouTubeEmbedUrl(src, watchOnly);
@@ -79,16 +82,32 @@ export function VideoPlayer({
     };
   }, [src, youTubeEmbedUrl]);
 
+  // Keep the <video> element's volume level in sync with the slider —
+  // setting `muted` on the prop alone doesn't drive intermediate volume.
+  useEffect(() => {
+    if (videoRef.current) videoRef.current.volume = volume;
+  }, [volume]);
+
   const toggle = () => {
     const video = videoRef.current;
     if (!video) return;
     if (video.paused) video.play().catch(() => undefined);
     else video.pause();
   };
+  const toggleMuted = () => {
+    setMuted((value) => {
+      const next = !value;
+      if (!next && volume === 0) setVolume(1);
+      return next;
+    });
+  };
   const fullscreen = () => containerRef.current?.requestFullscreen?.().catch(() => undefined);
 
   return (
-    <div ref={containerRef} className="group relative aspect-video w-full overflow-hidden rounded-2xl bg-black shadow-soft">
+    <div
+      ref={containerRef}
+      className="group relative aspect-video w-full overflow-hidden rounded-2xl bg-black shadow-soft"
+    >
       {youTubeEmbedUrl ? (
         <iframe
           className="h-full w-full border-0"
@@ -101,21 +120,91 @@ export function VideoPlayer({
         />
       ) : (
         <>
-          <video ref={videoRef} poster={poster} muted={muted} autoPlay playsInline onPlay={() => setIsPlaying(true)} onPause={() => setIsPlaying(false)} onWaiting={() => setLoading(true)} onPlaying={() => setLoading(false)} className="h-full w-full object-cover" />
-          {loading && !error && <div className="absolute inset-0 flex items-center justify-center bg-black/40"><Loader2 className="h-9 w-9 animate-spin text-primary" /></div>}
-          {error && <div className="absolute inset-0 flex items-center justify-center bg-black/70 px-6 text-center text-sm text-muted-foreground">Flux video momentanement indisponible.</div>}
-          {!watchOnly && (
-            <div className="pointer-events-none absolute inset-x-0 bottom-0 flex items-center gap-3 bg-gradient-to-t from-black/80 to-transparent p-4 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
-              <button type="button" onClick={toggle} aria-label={isPlaying ? "Pause" : "Lecture"} className="pointer-events-auto flex h-11 w-11 items-center justify-center rounded-full bg-primary text-primary-foreground transition-transform hover:scale-110">{isPlaying ? <Pause className="h-5 w-5" /> : <Play className="h-5 w-5" />}</button>
-              <button type="button" onClick={() => setMuted((value) => !value)} aria-label={muted ? "Activer le son" : "Couper le son"} className="pointer-events-auto flex h-10 w-10 items-center justify-center rounded-full bg-white/15 text-white backdrop-blur transition-colors hover:bg-white/25">{muted ? <VolumeX className="h-4 w-4" /> : <Volume2 className="h-4 w-4" />}</button>
-              {title && <span className="truncate text-sm font-medium text-white">{title}</span>}
-              <button type="button" onClick={fullscreen} aria-label="Plein ecran" className="pointer-events-auto ml-auto flex h-10 w-10 items-center justify-center rounded-full bg-white/15 text-white backdrop-blur transition-colors hover:bg-white/25"><Maximize className="h-4 w-4" /></button>
+          <video
+            ref={videoRef}
+            poster={poster}
+            muted={muted}
+            autoPlay
+            playsInline
+            onPlay={() => setIsPlaying(true)}
+            onPause={() => setIsPlaying(false)}
+            onWaiting={() => setLoading(true)}
+            onPlaying={() => setLoading(false)}
+            className="h-full w-full object-cover"
+          />
+          {loading && !error && (
+            <div className="absolute inset-0 flex items-center justify-center bg-black/40">
+              <Loader2 className="h-9 w-9 animate-spin text-primary" />
             </div>
           )}
+          {error && (
+            <div className="absolute inset-0 flex items-center justify-center bg-black/70 px-6 text-center text-sm text-muted-foreground">
+              Flux video momentanement indisponible.
+            </div>
+          )}
+          {muted && !loading && !error && (
+            <button
+              type="button"
+              onClick={toggleMuted}
+              className="absolute right-4 top-4 flex items-center gap-2 rounded-full bg-black/70 px-3 py-1.5 text-xs font-semibold text-white backdrop-blur transition-colors hover:bg-black/85"
+            >
+              <VolumeX className="h-3.5 w-3.5" /> Activer le son
+            </button>
+          )}
+          {/* Controls stay visible at all times (not hover-only) so they're
+              reachable on touch devices, where :hover never fires. */}
+          <div className="pointer-events-none absolute inset-x-0 bottom-0 flex items-center gap-3 bg-gradient-to-t from-black/85 via-black/30 to-transparent p-4">
+            <button
+              type="button"
+              onClick={toggle}
+              aria-label={isPlaying ? "Pause" : "Lecture"}
+              className="pointer-events-auto flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-primary text-primary-foreground transition-transform hover:scale-110"
+            >
+              {isPlaying ? <Pause className="h-5 w-5" /> : <Play className="h-5 w-5" />}
+            </button>
+            <button
+              type="button"
+              onClick={toggleMuted}
+              aria-label={muted ? "Activer le son" : "Couper le son"}
+              className="pointer-events-auto flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white/15 text-white backdrop-blur transition-colors hover:bg-white/25"
+            >
+              {muted ? <VolumeX className="h-4 w-4" /> : <Volume2 className="h-4 w-4" />}
+            </button>
+            {!live && (
+              <Slider
+                value={[muted ? 0 : volume * 100]}
+                max={100}
+                step={1}
+                onValueChange={([value]) => {
+                  const level = value / 100;
+                  setVolume(level);
+                  setMuted(level === 0);
+                }}
+                className="pointer-events-auto w-20 sm:w-28"
+                aria-label="Volume"
+              />
+            )}
+            {title && <span className="truncate text-sm font-medium text-white">{title}</span>}
+            {!watchOnly && (
+              <button
+                type="button"
+                onClick={fullscreen}
+                aria-label="Plein ecran"
+                className="pointer-events-auto ml-auto flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white/15 text-white backdrop-blur transition-colors hover:bg-white/25"
+              >
+                <Maximize className="h-4 w-4" />
+              </button>
+            )}
+          </div>
         </>
       )}
       {youTubeEmbedUrl && watchOnly && <div className="absolute inset-0" aria-hidden="true" />}
-      {live && <span className="pointer-events-none absolute left-4 top-4 flex items-center gap-2 rounded-full bg-live px-3 py-1 text-xs font-bold uppercase tracking-widest text-primary-foreground"><span className="animate-live h-1.5 w-1.5 rounded-full bg-white" />Live</span>}
+      {live && (
+        <span className="pointer-events-none absolute left-4 top-4 flex items-center gap-2 rounded-full bg-live px-3 py-1 text-xs font-bold uppercase tracking-widest text-primary-foreground">
+          <span className="animate-live h-1.5 w-1.5 rounded-full bg-white" />
+          Live
+        </span>
+      )}
     </div>
   );
 }

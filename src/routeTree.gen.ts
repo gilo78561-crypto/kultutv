@@ -26,7 +26,17 @@ import { Route as TvIndexRouteImport } from './routes/tv.index'
 import { Route as WebzineSlugRouteImport } from './routes/webzine.$slug'
 import { Route as TvDirectRouteImport } from './routes/tv.direct'
 import { Route as EmissionsSlugRouteImport } from './routes/emissions.$slug'
+import { Route as AdminLoginRouteImport } from './routes/admin.login'
+import { Route as AdminAuthedRouteImport } from './routes/admin._authed'
+import { Route as AdminAuthedIndexRouteImport } from './routes/admin._authed.index'
 import { Route as TvEmissionsSlugRouteImport } from './routes/tv.emissions.$slug'
+import { Route as AdminAuthedStreamsRouteImport } from './routes/admin._authed.streams'
+import { Route as AdminAuthedReplaysRouteImport } from './routes/admin._authed.replays'
+import { Route as AdminAuthedProgrammeRouteImport } from './routes/admin._authed.programme'
+import { Route as AdminAuthedPodcastsRouteImport } from './routes/admin._authed.podcasts'
+import { Route as AdminAuthedFlashInfoRouteImport } from './routes/admin._authed.flash-info'
+import { Route as AdminAuthedEmissionsRouteImport } from './routes/admin._authed.emissions'
+import { Route as AdminAuthedArticlesRouteImport } from './routes/admin._authed.articles'
 
 const WebzineRoute = WebzineRouteImport.update({
   id: '/webzine',
@@ -113,10 +123,60 @@ const EmissionsSlugRoute = EmissionsSlugRouteImport.update({
   path: '/emissions/$slug',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminLoginRoute = AdminLoginRouteImport.update({
+  id: '/admin/login',
+  path: '/admin/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminAuthedRoute = AdminAuthedRouteImport.update({
+  id: '/admin/_authed',
+  path: '/admin',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AdminAuthedIndexRoute = AdminAuthedIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => AdminAuthedRoute,
+} as any)
 const TvEmissionsSlugRoute = TvEmissionsSlugRouteImport.update({
   id: '/emissions/$slug',
   path: '/emissions/$slug',
   getParentRoute: () => TvRoute,
+} as any)
+const AdminAuthedStreamsRoute = AdminAuthedStreamsRouteImport.update({
+  id: '/streams',
+  path: '/streams',
+  getParentRoute: () => AdminAuthedRoute,
+} as any)
+const AdminAuthedReplaysRoute = AdminAuthedReplaysRouteImport.update({
+  id: '/replays',
+  path: '/replays',
+  getParentRoute: () => AdminAuthedRoute,
+} as any)
+const AdminAuthedProgrammeRoute = AdminAuthedProgrammeRouteImport.update({
+  id: '/programme',
+  path: '/programme',
+  getParentRoute: () => AdminAuthedRoute,
+} as any)
+const AdminAuthedPodcastsRoute = AdminAuthedPodcastsRouteImport.update({
+  id: '/podcasts',
+  path: '/podcasts',
+  getParentRoute: () => AdminAuthedRoute,
+} as any)
+const AdminAuthedFlashInfoRoute = AdminAuthedFlashInfoRouteImport.update({
+  id: '/flash-info',
+  path: '/flash-info',
+  getParentRoute: () => AdminAuthedRoute,
+} as any)
+const AdminAuthedEmissionsRoute = AdminAuthedEmissionsRouteImport.update({
+  id: '/emissions',
+  path: '/emissions',
+  getParentRoute: () => AdminAuthedRoute,
+} as any)
+const AdminAuthedArticlesRoute = AdminAuthedArticlesRouteImport.update({
+  id: '/articles',
+  path: '/articles',
+  getParentRoute: () => AdminAuthedRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
@@ -132,12 +192,22 @@ export interface FileRoutesByFullPath {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/tv': typeof TvRouteWithChildren
   '/webzine': typeof WebzineRouteWithChildren
+  '/admin': typeof AdminAuthedRouteWithChildren
+  '/admin/login': typeof AdminLoginRoute
   '/emissions/$slug': typeof EmissionsSlugRoute
   '/tv/direct': typeof TvDirectRoute
   '/webzine/$slug': typeof WebzineSlugRoute
   '/tv/': typeof TvIndexRoute
   '/webzine/': typeof WebzineIndexRoute
+  '/admin/articles': typeof AdminAuthedArticlesRoute
+  '/admin/emissions': typeof AdminAuthedEmissionsRoute
+  '/admin/flash-info': typeof AdminAuthedFlashInfoRoute
+  '/admin/podcasts': typeof AdminAuthedPodcastsRoute
+  '/admin/programme': typeof AdminAuthedProgrammeRoute
+  '/admin/replays': typeof AdminAuthedReplaysRoute
+  '/admin/streams': typeof AdminAuthedStreamsRoute
   '/tv/emissions/$slug': typeof TvEmissionsSlugRoute
+  '/admin/': typeof AdminAuthedIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -150,12 +220,21 @@ export interface FileRoutesByTo {
   '/radio': typeof RadioRoute
   '/recherche': typeof RechercheRoute
   '/sitemap.xml': typeof SitemapDotxmlRoute
+  '/admin/login': typeof AdminLoginRoute
   '/emissions/$slug': typeof EmissionsSlugRoute
   '/tv/direct': typeof TvDirectRoute
   '/webzine/$slug': typeof WebzineSlugRoute
   '/tv': typeof TvIndexRoute
   '/webzine': typeof WebzineIndexRoute
+  '/admin/articles': typeof AdminAuthedArticlesRoute
+  '/admin/emissions': typeof AdminAuthedEmissionsRoute
+  '/admin/flash-info': typeof AdminAuthedFlashInfoRoute
+  '/admin/podcasts': typeof AdminAuthedPodcastsRoute
+  '/admin/programme': typeof AdminAuthedProgrammeRoute
+  '/admin/replays': typeof AdminAuthedReplaysRoute
+  '/admin/streams': typeof AdminAuthedStreamsRoute
   '/tv/emissions/$slug': typeof TvEmissionsSlugRoute
+  '/admin': typeof AdminAuthedIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -171,12 +250,22 @@ export interface FileRoutesById {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/tv': typeof TvRouteWithChildren
   '/webzine': typeof WebzineRouteWithChildren
+  '/admin/_authed': typeof AdminAuthedRouteWithChildren
+  '/admin/login': typeof AdminLoginRoute
   '/emissions/$slug': typeof EmissionsSlugRoute
   '/tv/direct': typeof TvDirectRoute
   '/webzine/$slug': typeof WebzineSlugRoute
   '/tv/': typeof TvIndexRoute
   '/webzine/': typeof WebzineIndexRoute
+  '/admin/_authed/articles': typeof AdminAuthedArticlesRoute
+  '/admin/_authed/emissions': typeof AdminAuthedEmissionsRoute
+  '/admin/_authed/flash-info': typeof AdminAuthedFlashInfoRoute
+  '/admin/_authed/podcasts': typeof AdminAuthedPodcastsRoute
+  '/admin/_authed/programme': typeof AdminAuthedProgrammeRoute
+  '/admin/_authed/replays': typeof AdminAuthedReplaysRoute
+  '/admin/_authed/streams': typeof AdminAuthedStreamsRoute
   '/tv/emissions/$slug': typeof TvEmissionsSlugRoute
+  '/admin/_authed/': typeof AdminAuthedIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -193,12 +282,22 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/tv'
     | '/webzine'
+    | '/admin'
+    | '/admin/login'
     | '/emissions/$slug'
     | '/tv/direct'
     | '/webzine/$slug'
     | '/tv/'
     | '/webzine/'
+    | '/admin/articles'
+    | '/admin/emissions'
+    | '/admin/flash-info'
+    | '/admin/podcasts'
+    | '/admin/programme'
+    | '/admin/replays'
+    | '/admin/streams'
     | '/tv/emissions/$slug'
+    | '/admin/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -211,12 +310,21 @@ export interface FileRouteTypes {
     | '/radio'
     | '/recherche'
     | '/sitemap.xml'
+    | '/admin/login'
     | '/emissions/$slug'
     | '/tv/direct'
     | '/webzine/$slug'
     | '/tv'
     | '/webzine'
+    | '/admin/articles'
+    | '/admin/emissions'
+    | '/admin/flash-info'
+    | '/admin/podcasts'
+    | '/admin/programme'
+    | '/admin/replays'
+    | '/admin/streams'
     | '/tv/emissions/$slug'
+    | '/admin'
   id:
     | '__root__'
     | '/'
@@ -231,12 +339,22 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/tv'
     | '/webzine'
+    | '/admin/_authed'
+    | '/admin/login'
     | '/emissions/$slug'
     | '/tv/direct'
     | '/webzine/$slug'
     | '/tv/'
     | '/webzine/'
+    | '/admin/_authed/articles'
+    | '/admin/_authed/emissions'
+    | '/admin/_authed/flash-info'
+    | '/admin/_authed/podcasts'
+    | '/admin/_authed/programme'
+    | '/admin/_authed/replays'
+    | '/admin/_authed/streams'
     | '/tv/emissions/$slug'
+    | '/admin/_authed/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -252,6 +370,8 @@ export interface RootRouteChildren {
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   TvRoute: typeof TvRouteWithChildren
   WebzineRoute: typeof WebzineRouteWithChildren
+  AdminAuthedRoute: typeof AdminAuthedRouteWithChildren
+  AdminLoginRoute: typeof AdminLoginRoute
   EmissionsSlugRoute: typeof EmissionsSlugRoute
 }
 
@@ -376,12 +496,82 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof EmissionsSlugRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin/login': {
+      id: '/admin/login'
+      path: '/admin/login'
+      fullPath: '/admin/login'
+      preLoaderRoute: typeof AdminLoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/_authed': {
+      id: '/admin/_authed'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminAuthedRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/admin/_authed/': {
+      id: '/admin/_authed/'
+      path: '/'
+      fullPath: '/admin/'
+      preLoaderRoute: typeof AdminAuthedIndexRouteImport
+      parentRoute: typeof AdminAuthedRoute
+    }
     '/tv/emissions/$slug': {
       id: '/tv/emissions/$slug'
       path: '/emissions/$slug'
       fullPath: '/tv/emissions/$slug'
       preLoaderRoute: typeof TvEmissionsSlugRouteImport
       parentRoute: typeof TvRoute
+    }
+    '/admin/_authed/streams': {
+      id: '/admin/_authed/streams'
+      path: '/streams'
+      fullPath: '/admin/streams'
+      preLoaderRoute: typeof AdminAuthedStreamsRouteImport
+      parentRoute: typeof AdminAuthedRoute
+    }
+    '/admin/_authed/replays': {
+      id: '/admin/_authed/replays'
+      path: '/replays'
+      fullPath: '/admin/replays'
+      preLoaderRoute: typeof AdminAuthedReplaysRouteImport
+      parentRoute: typeof AdminAuthedRoute
+    }
+    '/admin/_authed/programme': {
+      id: '/admin/_authed/programme'
+      path: '/programme'
+      fullPath: '/admin/programme'
+      preLoaderRoute: typeof AdminAuthedProgrammeRouteImport
+      parentRoute: typeof AdminAuthedRoute
+    }
+    '/admin/_authed/podcasts': {
+      id: '/admin/_authed/podcasts'
+      path: '/podcasts'
+      fullPath: '/admin/podcasts'
+      preLoaderRoute: typeof AdminAuthedPodcastsRouteImport
+      parentRoute: typeof AdminAuthedRoute
+    }
+    '/admin/_authed/flash-info': {
+      id: '/admin/_authed/flash-info'
+      path: '/flash-info'
+      fullPath: '/admin/flash-info'
+      preLoaderRoute: typeof AdminAuthedFlashInfoRouteImport
+      parentRoute: typeof AdminAuthedRoute
+    }
+    '/admin/_authed/emissions': {
+      id: '/admin/_authed/emissions'
+      path: '/emissions'
+      fullPath: '/admin/emissions'
+      preLoaderRoute: typeof AdminAuthedEmissionsRouteImport
+      parentRoute: typeof AdminAuthedRoute
+    }
+    '/admin/_authed/articles': {
+      id: '/admin/_authed/articles'
+      path: '/articles'
+      fullPath: '/admin/articles'
+      preLoaderRoute: typeof AdminAuthedArticlesRouteImport
+      parentRoute: typeof AdminAuthedRoute
     }
   }
 }
@@ -413,6 +603,32 @@ const WebzineRouteChildren: WebzineRouteChildren = {
 const WebzineRouteWithChildren =
   WebzineRoute._addFileChildren(WebzineRouteChildren)
 
+interface AdminAuthedRouteChildren {
+  AdminAuthedArticlesRoute: typeof AdminAuthedArticlesRoute
+  AdminAuthedEmissionsRoute: typeof AdminAuthedEmissionsRoute
+  AdminAuthedFlashInfoRoute: typeof AdminAuthedFlashInfoRoute
+  AdminAuthedPodcastsRoute: typeof AdminAuthedPodcastsRoute
+  AdminAuthedProgrammeRoute: typeof AdminAuthedProgrammeRoute
+  AdminAuthedReplaysRoute: typeof AdminAuthedReplaysRoute
+  AdminAuthedStreamsRoute: typeof AdminAuthedStreamsRoute
+  AdminAuthedIndexRoute: typeof AdminAuthedIndexRoute
+}
+
+const AdminAuthedRouteChildren: AdminAuthedRouteChildren = {
+  AdminAuthedArticlesRoute: AdminAuthedArticlesRoute,
+  AdminAuthedEmissionsRoute: AdminAuthedEmissionsRoute,
+  AdminAuthedFlashInfoRoute: AdminAuthedFlashInfoRoute,
+  AdminAuthedPodcastsRoute: AdminAuthedPodcastsRoute,
+  AdminAuthedProgrammeRoute: AdminAuthedProgrammeRoute,
+  AdminAuthedReplaysRoute: AdminAuthedReplaysRoute,
+  AdminAuthedStreamsRoute: AdminAuthedStreamsRoute,
+  AdminAuthedIndexRoute: AdminAuthedIndexRoute,
+}
+
+const AdminAuthedRouteWithChildren = AdminAuthedRoute._addFileChildren(
+  AdminAuthedRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   ContactRoute: ContactRoute,
@@ -426,6 +642,8 @@ const rootRouteChildren: RootRouteChildren = {
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   TvRoute: TvRouteWithChildren,
   WebzineRoute: WebzineRouteWithChildren,
+  AdminAuthedRoute: AdminAuthedRouteWithChildren,
+  AdminLoginRoute: AdminLoginRoute,
   EmissionsSlugRoute: EmissionsSlugRoute,
 }
 export const routeTree = rootRouteImport

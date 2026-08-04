@@ -1,11 +1,11 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { VideoPlayer } from "@/components/VideoPlayer";
 import { Reveal } from "@/components/Reveal";
-import { replays } from "@/services/mock-data";
+import { api } from "@/services/api";
 
 export const Route = createFileRoute("/tv/emissions/$slug")({
-  loader: ({ params }) => {
-    const replay = replays.find((r) => r.slug === params.slug);
+  loader: async ({ params }) => {
+    const replay = await api.getReplay(params.slug);
     if (!replay) throw notFound();
     return { replay };
   },

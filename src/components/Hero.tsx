@@ -1,4 +1,5 @@
 import { Link } from "@tanstack/react-router";
+import { useQuery } from "@tanstack/react-query";
 import { AnimatePresence, motion } from "motion/react";
 import { ArrowRight, ChevronLeft, ChevronRight, Headphones, Play } from "lucide-react";
 import { useEffect, useState } from "react";
@@ -9,7 +10,7 @@ import heroStudio from "@/assets/hero/Screenshot_20260729-115138.jpg";
 import heroPortrait from "@/assets/hero/Screenshot_20260729-123358.jpg";
 import heroBenin from "@/assets/hero/Un_voyage_au_Benin___mes_incontournables.jpg";
 import { useRadio } from "@/hooks/use-radio";
-import { radioStreams, tvStreams, podcasts, articles } from "@/services/mock-data";
+import { api, queryKeys } from "@/services/api";
 
 const heroBackgrounds = [
   heroVodun,
@@ -20,38 +21,61 @@ const heroBackgrounds = [
   heroBenin,
 ];
 
-const previewCards = [
-  {
-    label: "Kultu TV Live",
-    sub: "En direct",
-    live: true,
-    cover: tvStreams[0].cover,
-    to: "/tv/direct" as const,
-  },
-  {
-    label: "Radio Kultu",
-    sub: "24h/24 et 7j/7",
-    live: false,
-    cover: radioStreams[0].cover,
-    to: "/radio" as const,
-  },
-  {
-    label: "Podcasts",
-    sub: "Écoutez, apprenez",
-    live: false,
-    cover: podcasts[0].cover,
-    to: "/" as const,
-  },
-  {
-    label: "Kultu Webzine",
-    sub: "Actualités & culture",
-    live: false,
-    cover: articles[0].cover,
-    to: "/webzine" as const,
-  },
-];
+type PreviewCard = {
+  label: string;
+  sub: string;
+  live: boolean;
+  cover: string;
+  to: "/tv/direct" | "/radio" | "/" | "/webzine";
+};
 
-function PreviewCardItem({ card }: { card: (typeof previewCards)[number] }) {
+function usePreviewCards(): PreviewCard[] {
+  const tvStreams = useQuery({ queryKey: queryKeys.tvStreams, queryFn: api.getTvStreams });
+  const radioStreams = useQuery({ queryKey: queryKeys.radioStreams, queryFn: api.getRadioStreams });
+  const podcasts = useQuery({ queryKey: queryKeys.podcasts, queryFn: api.getPodcasts });
+  const articles = useQuery({ queryKey: queryKeys.articles, queryFn: api.getArticles });
+
+  const cards: PreviewCard[] = [];
+  if (tvStreams.data?.[0]) {
+    cards.push({
+      label: "Kultu TV Live",
+      sub: "En direct",
+      live: true,
+      cover: tvStreams.data[0].cover,
+      to: "/tv/direct",
+    });
+  }
+  if (radioStreams.data?.[0]) {
+    cards.push({
+      label: "Radio Kultu",
+      sub: "24h/24 et 7j/7",
+      live: false,
+      cover: radioStreams.data[0].cover,
+      to: "/radio",
+    });
+  }
+  if (podcasts.data?.[0]) {
+    cards.push({
+      label: "Podcasts",
+      sub: "Écoutez, apprenez",
+      live: false,
+      cover: podcasts.data[0].cover,
+      to: "/",
+    });
+  }
+  if (articles.data?.[0]) {
+    cards.push({
+      label: "Kultu Webzine",
+      sub: "Actualités & culture",
+      live: false,
+      cover: articles.data[0].cover,
+      to: "/webzine",
+    });
+  }
+  return cards;
+}
+
+function PreviewCardItem({ card }: { card: PreviewCard }) {
   return (
     <Link
       to={card.to}
@@ -85,6 +109,8 @@ function PreviewCardItem({ card }: { card: (typeof previewCards)[number] }) {
 
 export function Hero() {
   const { play } = useRadio();
+  const previewCards = usePreviewCards();
+  const radioStreams = useQuery({ queryKey: queryKeys.radioStreams, queryFn: api.getRadioStreams });
   const [bgIndex, setBgIndex] = useState(0);
   const count = heroBackgrounds.length;
 
@@ -141,15 +167,12 @@ export function Hero() {
             </Link>
             <button
               type="button"
-              onClick={() =>
-                play({
-                  id: radioStreams[0].id,
-                  name: radioStreams[0].name,
-                  url: radioStreams[0].url,
-                  cover: radioStreams[0].cover,
-                })
-              }
-              className="inline-flex items-center gap-2 rounded-full border border-white/40 px-7 py-3 text-sm font-semibold text-white transition-transform hover:scale-105 active:scale-95"
+              disabled={!radioStreams.data?.[0]}
+              onClick={() => {
+                const radio = radioStreams.data?.[0];
+                if (radio) play(radio);
+              }}
+              className="inline-flex items-center gap-2 rounded-full border border-white/40 px-7 py-3 text-sm font-semibold text-white transition-transform hover:scale-105 active:scale-95 disabled:opacity-50"
             >
               Écouter la radio <Headphones className="h-4 w-4" />
             </button>

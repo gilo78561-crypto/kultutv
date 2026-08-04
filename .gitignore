@@ -17,6 +17,11 @@ dist-ssr
 .nitro
 *.local
 
+# Secrets — DB connection string, admin password hash, session secret
+.env
+.env.*
+!.env.example
+
 # Legacy videos are served from YouTube and must not be committed.
 public/contenue/*.mp4
 
@@ -34,3 +39,6 @@ public/contenue/*.mp4
 *.njsproj
 *.sln
 *.sw?
+
+.vercel
+.env*

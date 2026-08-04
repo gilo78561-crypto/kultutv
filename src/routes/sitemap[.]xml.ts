@@ -1,6 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import type {} from "@tanstack/react-start";
-import { articles, emissions, replays } from "@/services/mock-data";
+import { api } from "@/services/api";
 
 // TODO: replace with your project URL once a project name or custom domain is set.
 const BASE_URL = "";
@@ -15,6 +15,12 @@ export const Route = createFileRoute("/sitemap.xml")({
   server: {
     handlers: {
       GET: async () => {
+        const [articles, emissions, replays] = await Promise.all([
+          api.getArticles(),
+          api.getEmissions(),
+          api.getReplays(),
+        ]);
+
         const entries: SitemapEntry[] = [
           { path: "/", changefreq: "daily", priority: "1.0" },
           { path: "/tv", changefreq: "daily", priority: "0.9" },

@@ -56,7 +56,9 @@ export function Footer() {
       </div>
       <div className="border-t border-border px-4 py-6 text-center text-xs text-muted-foreground md:px-8">
         © {new Date().getFullYear()} KULTU TV — Tous droits réservés.
-        <p className="mt-2">Convention N 23-027/HAAC/CLC/CMSPr/SG/SGA/DAJDC/DM/SAJ/SCML/SCS du 13 decembre 2023</p>
+        <p className="mt-2">
+          Convention N 23-027/HAAC/CLC/CMSPr/SG/SGA/DAJDC/DM/SAJ/SCML/SCS du 13 decembre 2023
+        </p>
       </div>
     </footer>
   );

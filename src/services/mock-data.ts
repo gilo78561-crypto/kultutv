@@ -84,7 +84,12 @@ const cover = (seed: string, w = 800, h = 500) =>
   `https://picsum.photos/seed/kultu-${seed}/${w}/${h}`;
 
 export const tvStreams: Stream[] = [
-  { id: "tv-1", name: "KULTU TV — Direct", url: YOUTUBE_DIRECT, cover: youtubeCover("cBiQx0COYXM") },
+  {
+    id: "tv-1",
+    name: "KULTU TV — Direct",
+    url: YOUTUBE_DIRECT,
+    cover: youtubeCover("cBiQx0COYXM"),
+  },
   { id: "tv-2", name: "KULTU Culture", url: YOUTUBE_DIRECT, cover: youtubeCover("cBiQx0COYXM") },
 ];
 

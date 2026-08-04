@@ -2,14 +2,18 @@ import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { Play } from "lucide-react";
 import { VideoPlayer } from "@/components/VideoPlayer";
 import { Reveal } from "@/components/Reveal";
-import { emissions, replays } from "@/services/mock-data";
+import { api } from "@/services/api";
 import { ProgramCard } from "@/components/ProgramCard";
 
 export const Route = createFileRoute("/emissions/$slug")({
-  loader: ({ params }) => {
-    const emission = emissions.find((e) => e.slug === params.slug);
+  loader: async ({ params }) => {
+    const emission = await api.getEmission(params.slug);
     if (!emission) throw notFound();
-    return { emission, related: replays.filter((r) => r.emission === emission.title).slice(0, 3) };
+    const replays = await api.getReplays();
+    return {
+      emission,
+      related: replays.filter((r) => r.emission === emission.title).slice(0, 3),
+    };
   },
   head: ({ loaderData }) => {
     if (!loaderData) {

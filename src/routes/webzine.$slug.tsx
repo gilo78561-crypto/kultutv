@@ -1,12 +1,13 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { Reveal } from "@/components/Reveal";
-import { articles } from "@/services/mock-data";
+import { api } from "@/services/api";
 import { ArticleCard } from "@/components/ArticleCard";
 
 export const Route = createFileRoute("/webzine/$slug")({
-  loader: ({ params }) => {
-    const article = articles.find((a) => a.slug === params.slug);
+  loader: async ({ params }) => {
+    const article = await api.getArticle(params.slug);
     if (!article) throw notFound();
+    const articles = await api.getArticles();
     return { article, more: articles.filter((a) => a.slug !== params.slug).slice(0, 3) };
   },
   head: ({ loaderData }) => {
