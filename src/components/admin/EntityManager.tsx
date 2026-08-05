@@ -42,8 +42,8 @@ import {
 } from "@/components/ui/table";
 import { Textarea } from "@/components/ui/textarea";
 import { ComboField } from "@/components/admin/ComboField";
-import { FileUploadField } from "@/components/admin/FileUploadField";
 import { ScheduleField } from "@/components/admin/ScheduleField";
+import { UrlField } from "@/components/admin/UrlField";
 
 type DynamicFieldProps = { value: unknown; onChange: (value: unknown) => void };
 
@@ -57,7 +57,6 @@ export type FieldConfig = {
     | "number"
     | "select"
     | "lines"
-    | "file"
     | "combo"
     | "schedule"
     | "date"
@@ -295,12 +294,12 @@ export function EntityManager<TRow, TValues extends FieldValues>({
                       <ScheduleField value={String(rhf.value ?? "")} onChange={rhf.onChange} />
                     )}
                   />
-                ) : field.type === "file" ? (
+                ) : field.type === "url" ? (
                   <Controller
                     control={form.control}
                     name={field.name as never}
                     render={({ field: rhf }: { field: DynamicFieldProps }) => (
-                      <FileUploadField
+                      <UrlField
                         value={String(rhf.value ?? "")}
                         onChange={rhf.onChange}
                         accept={field.accept}

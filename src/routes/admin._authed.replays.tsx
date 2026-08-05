@@ -52,13 +52,12 @@ function ReplaysAdminPage() {
     },
     { name: "duration", label: "Durée", placeholder: "30 min" },
     { name: "date", label: "Date de diffusion", type: "date", required: false },
-    { name: "cover", label: "Image de couverture", type: "file", accept: "image/*" },
+    { name: "cover", label: "Image de couverture", type: "url", accept: "image/*" },
     {
       name: "streamUrl",
       label: "Vidéo",
-      type: "file",
-      accept: "video/*",
-      placeholder: "Lien YouTube ou envoyez un fichier vidéo",
+      type: "url",
+      placeholder: "Lien YouTube ou URL vidéo",
     },
     { name: "description", label: "Description", type: "textarea", rows: 4 },
   ];

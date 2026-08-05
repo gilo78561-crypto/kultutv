@@ -44,8 +44,8 @@ function PodcastsAdminPage() {
       placeholder: "Nouvelle émission",
     },
     { name: "duration", label: "Durée", placeholder: "12 min" },
-    { name: "cover", label: "Image de couverture", type: "file", accept: "image/*" },
-    { name: "audioUrl", label: "Fichier audio", type: "file", accept: "audio/*" },
+    { name: "cover", label: "Image de couverture", type: "url", accept: "image/*" },
+    { name: "audioUrl", label: "Lien audio", type: "url" },
   ];
 
   return (

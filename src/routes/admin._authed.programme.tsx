@@ -8,7 +8,7 @@ import { toast } from "sonner";
 import type { z } from "zod";
 
 import { ComboField } from "@/components/admin/ComboField";
-import { FileUploadField } from "@/components/admin/FileUploadField";
+import { UrlField } from "@/components/admin/UrlField";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -135,11 +135,7 @@ function ProgrammeAdminPage() {
                 control={form.control}
                 name="cover"
                 render={({ field }) => (
-                  <FileUploadField
-                    value={field.value ?? ""}
-                    onChange={field.onChange}
-                    accept="image/*"
-                  />
+                  <UrlField value={field.value ?? ""} onChange={field.onChange} accept="image/*" />
                 )}
               />
             </div>
@@ -149,11 +145,10 @@ function ProgrammeAdminPage() {
                 control={form.control}
                 name="streamUrl"
                 render={({ field }) => (
-                  <FileUploadField
+                  <UrlField
                     value={field.value ?? ""}
                     onChange={field.onChange}
-                    accept="video/*"
-                    placeholder="Lien YouTube ou envoyez un fichier vidéo"
+                    placeholder="Lien YouTube ou URL vidéo"
                   />
                 )}
               />

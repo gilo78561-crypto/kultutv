@@ -55,7 +55,7 @@ function ArticlesAdminPage() {
     { name: "author", label: "Auteur·rice", placeholder: "Awa Diarra" },
     { name: "date", label: "Date", type: "date" },
     { name: "readTime", label: "Temps de lecture", placeholder: "5 min" },
-    { name: "cover", label: "Image de couverture", type: "file", accept: "image/*" },
+    { name: "cover", label: "Image de couverture", type: "url", accept: "image/*" },
     { name: "excerpt", label: "Extrait", type: "textarea", rows: 2 },
     {
       name: "body",

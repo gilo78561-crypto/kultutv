@@ -35,7 +35,7 @@ const fields: FieldConfig[] = [
     type: "url",
     placeholder: "https://... (ou configuré automatiquement via le direct OBS ci-dessous)",
   },
-  { name: "cover", label: "Image de couverture", type: "file", accept: "image/*" },
+  { name: "cover", label: "Image de couverture", type: "url", accept: "image/*" },
   { name: "sortOrder", label: "Ordre d'affichage", type: "number" },
 ];
 
